@@ -410,6 +410,27 @@ class AdBlockerPro {
         } else {
             this.statusText.textContent = 'Not on YouTube';
         }
+        
+        // Check ML service connection (optional, fallback to built-in detection)
+        this.checkMLService();
+    }
+    
+    async checkMLService() {
+        try {
+            const response = await fetch('http://localhost:8080/health');
+            const data = await response.json();
+            
+            if (data.status === 'healthy' && data.model_loaded) {
+                console.log('ML Service connected successfully');
+                this.mlServiceConnected = true;
+            } else {
+                console.log('ML Service running but model not loaded');
+                this.mlServiceConnected = false;
+            }
+        } catch (error) {
+            console.log('ML Service not available - using built-in detection');
+            this.mlServiceConnected = false;
+        }
     }
 
     togglePauseBlocking() {
