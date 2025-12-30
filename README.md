@@ -1,88 +1,68 @@
-# YouTube Ad Blocker Pro 🛡️
+# YouTube Ad Blocker Pro
 
-I got tired of YouTube ads interrupting my videos, so I built this extension to block them all. It's grown into something pretty powerful - it uses smart algorithms to catch every type of ad YouTube throws at you.
+I built this extension because I was tired of YouTube ads interrupting videos. It uses advanced algorithms to block every type of ad YouTube throws at you.
 
-## ✨ What It Does
+## Features
 
-### 🎯 Blocks All Types of Ads
-- **Video Ads**: Skips pre-roll, mid-roll, and post-roll ads automatically
-- **Banner Ads**: Removes those annoying display ads and overlays
-- **Sponsored Content**: Hides promoted videos that show up in your feed
-- **Trackers**: Stops ad networks from following you around
+### Ad Blocking
+- Skips video ads (pre-roll, mid-roll, post-roll)
+- Removes banner ads and overlays
+- Hides sponsored content and promoted videos
+- Blocks ad trackers and analytics
 
-### 🧠 Smart Detection
-- **Learns Continuously**: Gets better at spotting new ad formats over time
-- **Pattern Recognition**: Uses smart algorithms to identify ads reliably
-- **Adapts Quickly**: Updates itself when YouTube changes their ad system
-- **Lightweight**: Won't slow down your browser
+### Smart Detection
+- Learns and adapts to new ad formats
+- Pattern recognition for reliable identification
+- Quick adaptation to YouTube changes
+- Lightweight performance
 
-### 📊 Real-Time Analytics
-- **Live Statistics**: Track ads blocked, success rate, and performance
-- **Historical Data**: View blocking trends over time
-- **Performance Metrics**: Monitor CPU usage, memory, and response times
-- **Interactive Charts**: Visual representation of blocking effectiveness
+### Analytics
+- Real-time statistics and performance tracking
+- Historical blocking trends
+- Resource monitoring (CPU, memory)
+- Success rate metrics
 
-### 🎛️ Advanced Customization
-- **Custom Rules**: Add your own CSS selectors and URL patterns
-- **Whitelist/Blacklist**: Manage sites to exclude or specifically block
-- **Granular Controls**: Toggle specific ad types independently
-- **Import/Export Settings**: Backup and share your configuration
+### Customization
+- Custom CSS selector rules
+- Whitelist/blacklist management
+- Granular ad type controls
+- Settings import/export
 
-### 🎨 Modern Interface
-- **Dark/Light Themes**: Automatic theme switching with manual override
-- **Tabbed Navigation**: Organized settings and advanced options
-- **Responsive Design**: Works perfectly on all screen sizes
-- **Smooth Animations**: Professional transitions and micro-interactions
+### Interface
+- Dark/light/auto themes
+- Clean tabbed navigation
+- Responsive design
+- Keyboard shortcuts (Ctrl+K, Ctrl+D, Ctrl+R)
 
-### ⚡ Performance Features
-- **Optimized Engine**: Minimal impact on browser performance
-- **Performance Mode**: Automatic optimization for low-end devices
-- **Resource Monitoring**: Real-time CPU and memory tracking
-- **Efficient Algorithms**: Smart caching and throttling
+## Installation
 
-### 🎯 Advanced Blocking
-- **Video Ads**: Skips and removes video advertisements
-- **Banner Ads**: Eliminates display ads and overlays
-- **Sponsored Content**: Hides promoted videos and placements
-- **Tracking Prevention**: Blocks ad trackers and analytics
-- **Network Interception**: Stops ads at the request level
+### Quick Install
 
-### ⌨️ Keyboard Shortcuts
-- `Ctrl+K` (Cmd+K on Mac): Toggle pause/resume blocking
-- `Ctrl+D` (Cmd+D on Mac): Toggle theme
-- `Ctrl+R` (Cmd+R on Mac): Reset statistics
+1. Download the latest release from [Releases page](https://github.com/Salman-TCM/youtube-adblocker/releases)
+2. Unzip the file somewhere you'll remember
+3. Open Chrome and go to `chrome://extensions/`
+4. Turn on "Developer mode" (top right toggle)
+5. Click "Load unpacked" and select the folder you unzipped
+6. Done! YouTube ads should now be blocked automatically
 
-## 🚀 Getting Started
-
-### Quick Install (Recommended)
-
-1. **Download** the latest release from the [Releases page](https://github.com/Salman-TCM/youtube-adblocker/releases)
-2. **Unzip** the file somewhere you'll remember
-3. **Open Chrome** and go to `chrome://extensions/`
-4. **Turn on** "Developer mode" (top right toggle)
-5. **Click** "Load unpacked" and select the folder you unzipped
-6. **Done!** YouTube ads should now be blocked automatically
-
-### Install from Source (For Developers)
-
-If you want to modify the code or help with development:
+### Install from Source
 
 ```bash
 git clone https://github.com/Salman-TCM/youtube-adblocker.git
 cd youtube-adblocker
 ```
 
-Then follow steps 3-6 from the Quick Install guide above.
+Then follow steps 3-6 from the Quick Install guide.
 
 ### Chrome Web Store
-I'm working on getting this published to the Chrome Web Store - coming soon!
+Coming soon!
 
-## 📖 Usage
+## Usage
 
 ### Basic Usage
-1. **Install** the extension
-2. **Visit YouTube** - ads are blocked automatically
-3. **Click the icon** to view statistics and settings
+1. Install the extension
+2. Visit YouTube - ads are blocked automatically
+3. Click the icon to view statistics and settings
 
 ### Advanced Features
 
@@ -92,7 +72,7 @@ I'm working on getting this published to the Chrome Web Store - coming soon!
 - Monitor AI effectiveness in the Performance tab
 
 #### Custom Rules
-1. Go to Advanced tab
+1. Go to the Advanced tab
 2. Enter CSS selectors or URL patterns
 3. Click "Add Rule" to apply
 
