@@ -125,57 +125,67 @@
 
     // Function to intercept player API calls
     function interceptPlayerAPI() {
-        // Override XMLHttpRequest to catch ad-related API calls
-        const originalXHR = window.XMLHttpRequest;
-        window.XMLHttpRequest = function() {
-            const xhr = new originalXHR();
-            const originalOpen = xhr.open;
-            const originalSend = xhr.send;
+        try {
+            // Override XMLHttpRequest to catch ad-related API calls
+            if (typeof window.XMLHttpRequest === 'function') {
+                const originalXHR = window.XMLHttpRequest;
+                window.XMLHttpRequest = function() {
+                    const xhr = new originalXHR();
+                    const originalOpen = xhr.open;
+                    const originalSend = xhr.send;
 
-            xhr.open = function(method, url, ...args) {
-                if (typeof url === 'string' && 
-                    (url.includes('youtubei/v1/player') || 
-                     url.includes('get_video_info'))) {
-                    
-                    xhr.addEventListener('readystatechange', function() {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            try {
-                                const response = JSON.parse(xhr.responseText);
+                    xhr.open = function(method, url, ...args) {
+                        try {
+                            if (typeof url === 'string' && 
+                                (url.includes('youtubei/v1/player') || 
+                                 url.includes('get_video_info'))) {
                                 
-                                // Remove ad data from response
-                                if (response.adPlacements) {
-                                    delete response.adPlacements;
-                                }
-                                if (response.playerAds) {
-                                    delete response.playerAds;
-                                }
-                                if (response.adSlots) {
-                                    delete response.adSlots;
-                                }
-                                
-                                // Modify response object
-                                Object.defineProperty(xhr, 'responseText', {
-                                    value: JSON.stringify(response),
-                                    writable: false
+                                xhr.addEventListener('readystatechange', function() {
+                                    if (xhr.readyState === 4 && xhr.status === 200) {
+                                        try {
+                                            const response = JSON.parse(xhr.responseText);
+                                            
+                                            // Remove ad data from response
+                                            if (response.adPlacements) {
+                                                delete response.adPlacements;
+                                            }
+                                            if (response.playerAds) {
+                                                delete response.playerAds;
+                                            }
+                                            if (response.adSlots) {
+                                                delete response.adSlots;
+                                            }
+                                            
+                                            // Modify response object
+                                            Object.defineProperty(xhr, 'responseText', {
+                                                value: JSON.stringify(response),
+                                                writable: false
+                                            });
+                                            
+                                            Object.defineProperty(xhr, 'response', {
+                                                value: response,
+                                                writable: false
+                                            });
+                                            
+                                        } catch (e) {
+                                            // Ignore JSON parsing errors
+                                        }
+                                    }
                                 });
-                                
-                                Object.defineProperty(xhr, 'response', {
-                                    value: response,
-                                    writable: false
-                                });
-                                
-                            } catch (e) {
-                                // Ignore JSON parsing errors
                             }
+                        } catch (error) {
+                            console.log('Error in XHR open:', error);
                         }
-                    });
-                }
-                
-                return originalOpen.call(this, method, url, ...args);
-            };
+                        
+                        return originalOpen.call(this, method, url, ...args);
+                    };
 
-            return xhr;
-        };
+                    return xhr;
+                };
+            }
+        } catch (error) {
+            console.log('Error in interceptPlayerAPI:', error);
+        }
     }
 
     // Function to monitor player changes
@@ -240,14 +250,25 @@
 
     // Function to handle player ready state
     function handlePlayerReady() {
-        const player = document.querySelector('#movie_player');
-        if (player && player.getPlayerState) {
-            // YouTube's native player API
-            const originalPlayVideo = player.playVideo;
-            player.playVideo = function() {
-                handleVideoAds();
-                return originalPlayVideo.call(this);
-            };
+        try {
+            const player = document.querySelector('#movie_player');
+            if (player && typeof player.getPlayerState === 'function') {
+                // YouTube's native player API
+                const originalPlayVideo = player.playVideo;
+                if (typeof originalPlayVideo === 'function') {
+                    player.playVideo = function() {
+                        try {
+                            handleVideoAds();
+                            return originalPlayVideo.call(this);
+                        } catch (error) {
+                            console.log('Error in overridden playVideo:', error);
+                            return originalPlayVideo.call(this);
+                        }
+                    };
+                }
+            }
+        } catch (error) {
+            console.log('Error in handlePlayerReady:', error);
         }
     }
 
