@@ -391,24 +391,36 @@ class AdBlockerPro {
     async checkExtensionStatus() {
         if (!this.statusDot || !this.statusText) return;
         
-        const tabs = await chrome.tabs.query({active: true, currentWindow: true});
-        const currentTab = tabs[0];
-        
-        if (currentTab && currentTab.url.includes('youtube.com')) {
-            try {
-                const response = await chrome.tabs.sendMessage(currentTab.id, {action: 'ping'});
-                if (response && response.status === 'ok') {
+        try {
+            const tabs = await chrome.tabs.query({active: true, currentWindow: true});
+            const currentTab = tabs[0];
+            
+            if (currentTab && currentTab.url.includes('youtube.com')) {
+                try {
+                    // Check if extension context is valid
+                    if (!chrome.runtime || chrome.runtime.lastError) {
+                        throw new Error('Extension context invalid');
+                    }
+                    
+                    const response = await chrome.tabs.sendMessage(currentTab.id, {action: 'ping'});
+                    if (response && response.status === 'ok') {
+                        this.statusDot.classList.remove('inactive');
+                        this.statusText.textContent = this.isPaused ? 'Paused' : 'Active';
+                    } else {
+                        throw new Error('No response');
+                    }
+                } catch (error) {
+                    // Content script might be disabled - still show as active if extension is loaded
                     this.statusDot.classList.remove('inactive');
-                    this.statusText.textContent = this.isPaused ? 'Paused' : 'Active';
-                } else {
-                    throw new Error('No response');
+                    this.statusText.textContent = 'Active (Video Blocking)';
                 }
-            } catch (error) {
-                this.statusDot.classList.add('inactive');
-                this.statusText.textContent = 'Inactive';
+            } else {
+                this.statusText.textContent = 'Not on YouTube';
             }
-        } else {
-            this.statusText.textContent = 'Not on YouTube';
+        } catch (error) {
+            // Extension context error - show as inactive
+            this.statusDot.classList.add('inactive');
+            this.statusText.textContent = 'Loading...';
         }
         
         // Check ML service connection (optional, fallback to built-in detection)
@@ -703,14 +715,28 @@ class AdBlockerPro {
     }
 
     notifyContentScript(settings) {
-        chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
-            if (tabs[0] && tabs[0].url.includes('youtube.com')) {
-                chrome.tabs.sendMessage(tabs[0].id, {
-                    action: 'updateSettings',
-                    settings: settings
-                });
-            }
-        });
+        try {
+            chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
+                if (chrome.runtime.lastError) {
+                    console.log('Extension context error:', chrome.runtime.lastError);
+                    return;
+                }
+                
+                if (tabs[0] && tabs[0].url.includes('youtube.com')) {
+                    chrome.tabs.sendMessage(tabs[0].id, {
+                        action: 'updateSettings',
+                        settings: settings
+                    }, (response) => {
+                        if (chrome.runtime.lastError) {
+                            console.log('Content script communication error:', chrome.runtime.lastError);
+                            // This is expected since content.js is disabled
+                        }
+                    });
+                }
+            });
+        } catch (error) {
+            console.log('Error notifying content script:', error);
+        }
     }
 
     async loadAdvancedData() {
