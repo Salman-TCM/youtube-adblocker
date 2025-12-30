@@ -311,22 +311,30 @@
 
     // Message handler for communication with popup
     if (chrome && chrome.runtime) {
-        chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-            if (request.action === 'ping') {
-                sendResponse({ status: 'ok' });
-            }
-            
-            if (request.action === 'getStats') {
-                // Return local stats if available
-                const stats = window.getAdBlockerStats ? window.getAdBlockerStats() : { blockedCount: 0 };
-                sendResponse(stats);
-            }
-            
-            if (request.action === 'updateSettings') {
-                // Apply new settings
-                console.log('Updated settings:', request.settings);
-            }
-        });
+        try {
+            chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+                try {
+                    if (request.action === 'ping') {
+                        sendResponse({ status: 'ok' });
+                    }
+                    
+                    if (request.action === 'getStats') {
+                        // Return local stats if available
+                        const stats = window.getAdBlockerStats ? window.getAdBlockerStats() : { blockedCount: 0 };
+                        sendResponse(stats);
+                    }
+                    
+                    if (request.action === 'updateSettings') {
+                        // Apply new settings
+                        console.log('Updated settings:', request.settings);
+                    }
+                } catch (error) {
+                    console.log('Error in message handler:', error);
+                }
+            });
+        } catch (error) {
+            console.log('Error setting up message handler:', error);
+        }
     }
 
     // Start when DOM is ready

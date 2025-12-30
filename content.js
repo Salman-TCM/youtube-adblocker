@@ -592,41 +592,61 @@
         }
 
         updateStatistics() {
-            chrome.storage.local.get(['blockedAds'], (result) => {
-                const total = (result.blockedAds || 0) + 1;
-                chrome.storage.local.set({
-                    blockedAds: total,
-                    totalAds: total,
-                    lastUpdated: new Date().toISOString()
-                });
-            });
+            try {
+                if (chrome && chrome.runtime && chrome.storage) {
+                    chrome.storage.local.get(['blockedAds'], (result) => {
+                        try {
+                            const total = (result.blockedAds || 0) + 1;
+                            chrome.storage.local.set({
+                                blockedAds: total,
+                                totalAds: total,
+                                lastUpdated: new Date().toISOString()
+                            });
+                        } catch (error) {
+                            console.log('Error updating statistics:', error);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.log('Error in updateStatistics:', error);
+            }
         }
 
         setupMessageHandlers() {
-            chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-                switch (request.action) {
-                    case 'ping':
-                        sendResponse({status: 'ok'});
-                        break;
-                        
-                    case 'getStats':
-                        sendResponse({blockedAds: this.blockedCount});
-                        break;
-                        
-                    case 'updateSettings':
-                        this.settings = request.settings;
-                        console.log('📝 Settings updated:', request.settings);
-                        break;
-                        
-                    case 'togglePause':
-                        this.isPaused = request.paused;
-                        console.log(this.isPaused ? '⏸️ Blocking paused' : '▶️ Blocking resumed');
-                        break;
-                        
-                    default:
-                        sendResponse({error: 'Unknown action'});
+            try {
+                if (chrome && chrome.runtime) {
+                    chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+                        try {
+                            switch (request.action) {
+                                case 'ping':
+                                    sendResponse({status: 'ok'});
+                                    break;
+                                    
+                                case 'getStats':
+                                    sendResponse({blockedAds: this.blockedCount});
+                                    break;
+                                    
+                                case 'updateSettings':
+                                    this.settings = request.settings;
+                                    console.log('📝 Settings updated:', request.settings);
+                                    break;
+                                    
+                                case 'togglePause':
+                                    this.isPaused = request.paused;
+                                    console.log(this.isPaused ? '⏸️ Blocking paused' : '▶️ Blocking resumed');
+                                    break;
+                                    
+                                default:
+                                    sendResponse({error: 'Unknown action'});
+                            }
+                        } catch (error) {
+                            console.log('Error handling message:', error);
+                        }
+                    });
                 }
-            });
+            } catch (error) {
+                console.log('Error setting up message handlers:', error);
+            }
         }
 
         cleanup() {
