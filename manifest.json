@@ -1,23 +1,29 @@
 {
   "manifest_version": 3,
-  "name": "YouTube Ad Blocker",
-  "version": "1.0.0",
-  "description": "Blocks YouTube ads and sponsored content",
+  "name": "YouTube Ad Blocker Pro",
+  "version": "2.0.0",
+  "description": "Advanced AI-powered YouTube ad blocker with real-time analytics and customizable rules",
   "permissions": [
     "webRequest",
     "storage",
     "tabs",
-    "declarativeNetRequest"
+    "declarativeNetRequest",
+    "scripting",
+    "activeTab"
   ],
   "host_permissions": [
     "*://*.youtube.com/*",
     "*://*.googlevideo.com/*",
     "*://*.doubleclick.net/*",
     "*://*.googleadservices.com/*",
-    "*://*.googlesyndication.com/*"
+    "*://*.googlesyndication.com/*",
+    "*://*.google-analytics.com/*",
+    "*://*.facebook.com/tr*",
+    "*://*.amazon-adsystem.com/*",
+    "*://*.adnxs.com/*"
   ],
-  "declarative_net_request" : {
-    "rule_resources" : [{
+  "declarative_net_request": {
+    "rule_resources": [{
       "id": "ruleset_1",
       "enabled": true,
       "path": "rules.json"
@@ -31,16 +37,39 @@
       "matches": ["*://*.youtube.com/*"],
       "js": ["content.js"],
       "css": ["styles.css"],
-      "run_at": "document_start"
+      "run_at": "document_start",
+      "all_frames": true
     }
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "YouTube Ad Blocker"
+    "default_title": "YouTube Ad Blocker Pro"
   },
   "icons": {
     "16": "icons/icon.svg",
     "48": "icons/icon.svg",
     "128": "icons/icon.svg"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/icon.svg"],
+      "matches": ["*://*.youtube.com/*"]
+    }
+  ],
+  "commands": {
+    "toggle-pause": {
+      "suggested_key": {
+        "default": "Ctrl+K",
+        "mac": "Command+K"
+      },
+      "description": "Toggle ad blocking pause"
+    },
+    "toggle-theme": {
+      "suggested_key": {
+        "default": "Ctrl+D",
+        "mac": "Command+D"
+      },
+      "description": "Toggle theme"
+    }
   }
 }
