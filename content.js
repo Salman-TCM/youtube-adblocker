@@ -275,18 +275,22 @@
             if (this.isPaused) return false;
             if (!this.isElementVisible(element)) return false;
             
-            // Don't block video elements themselves - only ad overlays
+            // Never block video elements
             if (element.tagName === 'VIDEO') return false;
             if (element.tagName === 'video') return false;
             
-            // Don't block main content containers
+            // Don't block any YouTube core functionality
             if (element.id && (
                 element.id.includes('movie_player') ||
                 element.id.includes('player') ||
                 element.id.includes('container') ||
                 element.id.includes('watch7') ||
                 element.id.includes('primary') ||
-                element.id.includes('secondary')
+                element.id.includes('secondary') ||
+                element.id.includes('content') ||
+                element.id.includes('main') ||
+                element.id.includes('video') ||
+                element.id.includes('ytd')
             )) return false;
             
             // Don't block YouTube's main content areas
@@ -295,7 +299,25 @@
                 className.includes('watch-flexy') ||
                 className.includes('ytd-watch-flexy') ||
                 className.includes('html5-main-video') ||
-                className.includes('player-container')) return false;
+                className.includes('player-container') ||
+                className.includes('video-container') ||
+                className.includes('ytd-video') ||
+                className.includes('ytd-player') ||
+                className.includes('html5-video') ||
+                className.includes('video-js') ||
+                className.includes('player-api')) return false;
+            
+            // Don't block iframes (could be video players)
+            if (element.tagName === 'IFRAME' || element.tagName === 'iframe') {
+                if (className.includes('player') || className.includes('video') || className.includes('youtube')) {
+                    return false;
+                }
+            }
+            
+            // Don't block canvas elements (could be video rendering)
+            if (element.tagName === 'CANVAS' || element.tagName === 'canvas') {
+                return false;
+            }
             
             // Check whitelist
             const currentDomain = window.location.hostname;
@@ -304,25 +326,23 @@
             // Check blacklist
             if (this.blacklistedSites.includes(currentDomain)) return true;
             
-            // Only use AI for obvious ad elements
-            if (this.settings.enableAI && this.aiModel) {
-                const features = this.extractFeatures(element);
-                const score = this.classifyAdElement(features);
-                // Only block if score is very high (definitely an ad)
-                return score > 0.8;
-            }
-            
-            // More conservative blocking - only block obvious ads
+            // Only block specific, known ad elements - be extremely conservative
             const tagName = (element && element.tagName) ? (typeof element.tagName === 'string' ? element.tagName.toLowerCase() : '') : '';
             const id = (element && element.id) ? element.id.toLowerCase() : '';
             
-            // Only block elements with obvious ad indicators
-            return tagName.includes('ad') || 
-                   className.includes('ad') || 
-                   id.includes('ad') ||
-                   tagName.includes('banner') ||
-                   className.includes('banner') ||
-                   id.includes('banner');
+            // Only block very specific ad indicators
+            return (
+                (tagName.includes('ad') && !tagName.includes('player')) ||
+                (id.includes('ad') && !id.includes('player') && !id.includes('video')) ||
+                (className.includes('ad') && !className.includes('player') && !className.includes('video'))
+            ) && (
+                tagName.includes('ad') ||
+                className.includes('ad') ||
+                id.includes('ad') ||
+                tagName.includes('banner') ||
+                className.includes('banner') ||
+                id.includes('banner')
+            );
         }
 
         blockElement(element, selector) {
