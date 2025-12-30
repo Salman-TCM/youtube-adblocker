@@ -3,102 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Ad Blocker</title>
+    <title>YouTube Ad Blocker Pro</title>
     <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="popup-container">
         <header class="popup-header">
             <div class="logo">
-                <img src="icons/icon48.png" alt="YouTube Ad Blocker" width="32" height="32">
-                <h1>YouTube Ad Blocker</h1>
+                <img src="icons/icon.svg" alt="YouTube Ad Blocker Pro" width="32" height="32">
+                <div>
+                    <h1>Ad Blocker Pro</h1>
+                    <span class="version-badge">v2.0</span>
+                </div>
             </div>
-            <div class="status-indicator" id="statusIndicator">
-                <span class="status-dot active"></span>
-                <span class="status-text">Active</span>
+            <div class="header-actions">
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot active"></span>
+                    <span class="status-text">Active</span>
+                </div>
+                <button class="theme-toggle" id="themeToggle" title="Toggle Theme">
+                    <span class="theme-icon">🌙</span>
+                </button>
             </div>
         </header>
 
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="dashboard">Dashboard</button>
+            <button class="tab-btn" data-tab="settings">Settings</button>
+            <button class="tab-btn" data-tab="advanced">Advanced</button>
+        </nav>
+
         <main class="popup-content">
-            <section class="stats-section">
-                <h2>Blocking Statistics</h2>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-number" id="blockedCount">0</div>
-                        <div class="stat-label">Ads Blocked</div>
+            <!-- Dashboard Tab -->
+            <div class="tab-content active" id="dashboard">
+                <section class="stats-section">
+                    <div class="stats-header">
+                        <h2>Real-Time Analytics</h2>
+                        <div class="performance-meter">
+                            <span class="perf-label">Performance</span>
+                            <div class="perf-bar">
+                                <div class="perf-fill" id="perfFill" style="width: 95%"></div>
+                            </div>
+                            <span class="perf-value" id="perfValue">95%</span>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalAds">0</div>
-                        <div class="stat-label">Total Detected</div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card primary">
+                            <div class="stat-icon">🛡️</div>
+                            <div class="stat-number" id="blockedCount">0</div>
+                            <div class="stat-label">Ads Blocked</div>
+                            <div class="stat-change positive" id="blockedChange">+0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📊</div>
+                            <div class="stat-number" id="totalAds">0</div>
+                            <div class="stat-label">Total Detected</div>
+                            <div class="stat-change" id="detectedChange">+0%</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⏱️</div>
+                            <div class="stat-number" id="sessionTime">0:00</div>
+                            <div class="stat-label">Session Time</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🎯</div>
+                            <div class="stat-number" id="blockRate">0%</div>
+                            <div class="stat-label">Success Rate</div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="sessionTime">0:00</div>
-                        <div class="stat-label">Session Time</div>
+
+                    <div class="chart-container">
+                        <canvas id="adsChart" width="300" height="150"></canvas>
                     </div>
-                </div>
-            </section>
+                </section>
 
-            <section class="settings-section">
-                <h2>Settings</h2>
-                <div class="setting-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="blockVideoAds" checked>
-                        <span class="toggle-slider"></span>
-                        <span class="toggle-text">Block Video Ads</span>
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="blockBannerAds" checked>
-                        <span class="toggle-slider"></span>
-                        <span class="toggle-text">Block Banner Ads</span>
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="blockSponsoredContent" checked>
-                        <span class="toggle-slider"></span>
-                        <span class="toggle-text">Block Sponsored Content</span>
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="autoSkipAds" checked>
-                        <span class="toggle-slider"></span>
-                        <span class="toggle-text">Auto-Skip Ads</span>
-                    </label>
-                </div>
-                <div class="setting-item">
-                    <label class="toggle-label">
-                        <input type="checkbox" id="showNotifications" checked>
-                        <span class="toggle-slider"></span>
-                        <span class="toggle-text">Show Notifications</span>
-                    </label>
-                </div>
-            </section>
+                <section class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="action-grid">
+                        <button class="action-btn" id="pauseBlocking">
+                            <span class="action-icon">⏸️</span>
+                            <span>Pause</span>
+                        </button>
+                        <button class="action-btn" id="whitelistSite">
+                            <span class="action-icon">⭐</span>
+                            <span>Whitelist</span>
+                        </button>
+                        <button class="action-btn" id="reportAd">
+                            <span class="action-icon">🚨</span>
+                            <span>Report Ad</span>
+                        </button>
+                        <button class="action-btn" id="exportData">
+                            <span class="action-icon">📤</span>
+                            <span>Export</span>
+                        </button>
+                    </div>
+                </section>
+            </div>
 
-            <section class="action-section">
-                <button class="btn btn-primary" id="resetStats">Reset Statistics</button>
-                <button class="btn btn-secondary" id="whitelistSite">Whitelist Site</button>
-                <button class="btn btn-secondary" id="reportAd">Report Unblocked Ad</button>
-            </section>
+            <!-- Settings Tab -->
+            <div class="tab-content" id="settings">
+                <section class="settings-section">
+                    <h2>Blocking Options</h2>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="blockVideoAds" checked>
+                                <span class="toggle-slider"></span>
+                                <div class="setting-info">
+                                    <span class="toggle-text">Block Video Ads</span>
+                                    <span class="setting-desc">Skip and remove video advertisements</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="blockBannerAds" checked>
+                                <span class="toggle-slider"></span>
+                                <div class="setting-info">
+                                    <span class="toggle-text">Block Banner Ads</span>
+                                    <span class="setting-desc">Remove display ads and banners</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="blockSponsoredContent" checked>
+                                <span class="toggle-slider"></span>
+                                <div class="setting-info">
+                                    <span class="toggle-text">Block Sponsored Content</span>
+                                    <span class="setting-desc">Hide sponsored videos and placements</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="autoSkipAds" checked>
+                                <span class="toggle-slider"></span>
+                                <div class="setting-info">
+                                    <span class="toggle-text">Auto-Skip Ads</span>
+                                    <span class="setting-desc">Automatically skip ads when possible</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="showNotifications" checked>
+                                <span class="toggle-slider"></span>
+                                <div class="setting-info">
+                                    <span class="toggle-text">Show Notifications</span>
+                                    <span class="setting-desc">Display blocking notifications</span>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle-label">
+                                <input type="checkbox" id="enableAI" checked>
+                                <span class="toggle-slider"></span>
+                                <div class="setting-info">
+                                    <span class="toggle-text">AI-Powered Detection</span>
+                                    <span class="setting-desc">Use advanced AI for ad detection</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </section>
 
-            <section class="info-section">
-                <div class="version-info">
-                    <span>Version 1.0.0</span>
-                    <span id="lastUpdated">Last updated: Never</span>
-                </div>
-                <div class="links">
-                    <a href="#" id="helpLink">Help</a>
-                    <a href="#" id="feedbackLink">Feedback</a>
-                    <a href="#" id="donateLink">Support Development</a>
-                </div>
-            </section>
+                <section class="settings-section">
+                    <h2>Appearance</h2>
+                    <div class="setting-item">
+                        <label class="select-label">
+                            <span>Theme</span>
+                            <select id="themeSelect">
+                                <option value="auto">Auto</option>
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label class="select-label">
+                            <span>Animation Speed</span>
+                            <select id="animationSpeed">
+                                <option value="fast">Fast</option>
+                                <option value="normal" selected>Normal</option>
+                                <option value="slow">Slow</option>
+                            </select>
+                        </label>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Advanced Tab -->
+            <div class="tab-content" id="advanced">
+                <section class="advanced-section">
+                    <h2>Custom Rules</h2>
+                    <div class="rules-container">
+                        <textarea id="customRules" placeholder="Enter custom CSS selectors or URL patterns..."></textarea>
+                        <div class="rules-actions">
+                            <button class="btn btn-sm" id="addRule">Add Rule</button>
+                            <button class="btn btn-sm btn-secondary" id="clearRules">Clear</button>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="advanced-section">
+                    <h2>Whitelist/Blacklist</h2>
+                    <div class="list-container">
+                        <div class="list-tabs">
+                            <button class="list-tab active" data-list="whitelist">Whitelist</button>
+                            <button class="list-tab" data-list="blacklist">Blacklist</button>
+                        </div>
+                        <div class="list-content">
+                            <input type="text" id="listInput" placeholder="Enter domain or URL pattern...">
+                            <button class="btn btn-sm" id="addToList">Add</button>
+                            <div class="list-items" id="listItems"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="advanced-section">
+                    <h2>Performance</h2>
+                    <div class="performance-stats">
+                        <div class="perf-stat">
+                            <span>CPU Usage:</span>
+                            <span id="cpuUsage">2%</span>
+                        </div>
+                        <div class="perf-stat">
+                            <span>Memory:</span>
+                            <span id="memUsage">15MB</span>
+                        </div>
+                        <div class="perf-stat">
+                            <span>Rules Loaded:</span>
+                            <span id="rulesLoaded">1,247</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-secondary" id="optimizePerformance">Optimize Performance</button>
+                </section>
+
+                <section class="advanced-section">
+                    <h2>Data Management</h2>
+                    <div class="data-actions">
+                        <button class="btn btn-secondary" id="exportSettings">Export Settings</button>
+                        <button class="btn btn-secondary" id="importSettings">Import Settings</button>
+                        <button class="btn btn-danger" id="resetAll">Reset All Data</button>
+                    </div>
+                </section>
+            </div>
         </main>
 
         <footer class="popup-footer">
-            <div class="footer-text">
-                Blocking ads since <span id="installDate">Today</span>
+            <div class="footer-content">
+                <div class="footer-stats">
+                    <span>🛡️ <span id="todayBlocked">0</span> blocked today</span>
+                    <span>⚡ <span id="responseTime">12ms</span> avg response</span>
+                </div>
+                <div class="footer-links">
+                    <a href="#" id="helpLink" title="Help">❓</a>
+                    <a href="#" id="feedbackLink" title="Feedback">💬</a>
+                    <a href="#" id="updateLink" title="Check Updates">🔄</a>
+                </div>
             </div>
         </footer>
     </div>
