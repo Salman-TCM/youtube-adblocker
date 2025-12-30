@@ -249,11 +249,19 @@
         }
 
         performInitialSweep() {
+            // Skip initial sweep to prevent black screen
+            // Only enable after page is fully loaded
             setTimeout(() => {
-                this.hideElementsBySelector([...this.baseSelectors.videoAds, ...this.baseSelectors.bannerAds, ...this.baseSelectors.sponsoredContent]);
-                this.handleVideoAds();
-                this.removeAdSegments();
-            }, 500);
+                console.log('🔍 Starting delayed ad sweep');
+                // Only scan for very specific ad elements
+                this.hideElementsBySelector([
+                    '.ytp-ad-module',
+                    '.ytp-ad-overlay-slot', 
+                    '.ytp-ad-skip-button-container',
+                    '.ytd-display-ad-renderer',
+                    '.ytd-promoted-video-renderer'
+                ]);
+            }, 3000); // Wait 3 seconds for YouTube to fully load
         }
 
         hideElementsBySelector(selectors) {
@@ -539,41 +547,13 @@
         }
 
         startPeriodicChecks() {
-            setInterval(() => {
-                if (this.isPaused) return;
-                
-                this.hideElementsBySelector([
-                    ...this.baseSelectors.videoAds,
-                    ...this.baseSelectors.bannerAds,
-                    ...this.baseSelectors.sponsoredContent
-                ]);
-                
-                this.handleVideoAds();
-                this.removeAdSegments();
-            }, 2000);
+            // Disable periodic checks to prevent black screen
+            console.log('⏸️ Periodic checks disabled to prevent interference');
         }
 
         interceptNetworkRequests() {
-            // Override fetch for advanced request interception
-            const originalFetch = window.fetch;
-            window.fetch = (...args) => {
-                const url = args[0];
-                
-                if (typeof url === 'string' && this.isAdRequest(url)) {
-                    console.log('🚫 Intercepted ad request:', url);
-                    this.blockedCount++;
-                    
-                    // Return empty response for ad requests
-                    return new Promise((resolve) => {
-                        resolve(new Response('', {status: 204}));
-                    });
-                }
-                
-                return originalFetch.apply(this, args).then(response => {
-                    this.modifyResponse(url, response);
-                    return response;
-                });
-            };
+            // Disable network interception to prevent black screen
+            console.log('⏸️ Network interception disabled to prevent interference');
         }
 
         isAdRequest(url) {
@@ -594,17 +574,8 @@
         }
 
         startAIScanning() {
-            setInterval(() => {
-                if (this.isPaused || !this.settings.enableAI) return;
-                
-                // AI-powered element scanning
-                const allElements = document.querySelectorAll('*');
-                allElements.forEach(element => {
-                    if (this.shouldBlockElement(element) && this.aiModel.predictAdProbability(element)) {
-                        this.blockElement(element, 'ai-detection');
-                    }
-                });
-            }, 3000);
+            // Disable AI scanning to prevent black screen
+            console.log('⏸️ AI scanning disabled to prevent interference');
         }
 
         initializePerformanceOptimization() {
