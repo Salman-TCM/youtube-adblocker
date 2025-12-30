@@ -389,15 +389,15 @@
                 this.removeAdSegments();
             }, 500);
             
-            // Monitor video element changes
-            this.videoObserver = new MutationObserver(() => {
-                if (this.settings.autoSkipAds) {
-                    this.handleVideoAds();
-                }
-            });
-            
+            // Monitor video element changes - only if video exists
             const video = document.querySelector('video');
-            if (video) {
+            if (video && video.parentElement) {
+                this.videoObserver = new MutationObserver(() => {
+                    if (this.settings.autoSkipAds) {
+                        this.handleVideoAds();
+                    }
+                });
+                
                 this.videoObserver.observe(video.parentElement, {
                     childList: true,
                     subtree: true
@@ -457,10 +457,13 @@
 
         forceSkipVideo(video) {
             try {
-                video.currentTime = video.duration;
-                video.play();
-                console.log('⏩ Forced video ad skip');
-                this.blockedCount++;
+                // Only force skip if it's actually an ad (short duration)
+                if (video.duration && video.duration < 300 && video.currentTime < video.duration - 1) {
+                    video.currentTime = video.duration;
+                    video.play();
+                    console.log('⏩ Forced video ad skip');
+                    this.blockedCount++;
+                }
             } catch (error) {
                 console.warn('Failed to force skip:', error);
             }
