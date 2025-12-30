@@ -1,144 +1,251 @@
-# Quick Installation Guide
+# YouTube Ad Blocker Pro - Installation Guide 🚀
 
-## 🚀 Install in 2 Minutes
+## 📋 Prerequisites
 
-### Chrome/Edge/Brave/Opera (Recommended)
+- **Chrome Browser**: Version 88 or higher
+- **Developer Mode**: Enabled in Chrome extensions
+- **File Access**: Permission to load unpacked extensions
 
-1. **Download the extension**
-   ```bash
-   # If you have the files locally, skip to step 2
-   git clone https://github.com/yourusername/youtube-adblocker.git
-   cd youtube-adblocker
-   ```
+## 🛠️ Installation Steps
 
-2. **Open browser extensions**
-   - Press `Ctrl+Shift+A` (or `Cmd+Shift+A` on Mac)
-   - OR navigate to `chrome://extensions/`
+### Method 1: From Source Code
 
-3. **Enable Developer Mode**
-   - Toggle the "Developer mode" switch in top right
-   - Additional options will appear
+#### Step 1: Download the Extension
+```bash
+# Clone the repository
+git clone https://github.com/Salman-TCM/youtube-adblocker.git
 
-4. **Install the extension**
-   - Click "Load unpacked"
-   - Select the `youtube-adblocker` folder
-   - Extension will appear in your extensions list
+# Or download as ZIP and extract
+# https://github.com/Salman-TCM/youtube-adblocker/archive/main.zip
+```
 
-5. **Verify installation**
-   - Look for the YouTube Ad Blocker icon in your toolbar
-   - Visit YouTube.com
-   - Ads should be automatically blocked!
+#### Step 2: Open Chrome Extensions
+1. Open Chrome browser
+2. Navigate to `chrome://extensions/`
+3. Enable **"Developer mode"** (top right toggle)
+4. Click **"Load unpacked"** button
 
-### Firefox (Advanced Users)
+#### Step 3: Load Extension
+1. Navigate to the extracted extension folder
+2. Select the entire folder (not individual files)
+3. Click **"Select Folder"**
 
-1. **Open about:debugging**
-   - Type `about:debugging` in Firefox address bar
-   - Click "This Firefox"
+#### Step 4: Verify Installation
+- Look for "YouTube Ad Blocker Pro" in your extensions list
+- Check that the extension icon appears in your toolbar
+- Visit YouTube to verify ads are being blocked
 
-2. **Load temporary add-on**
-   - Click "Load Temporary Add-on"
-   - Select the `manifest.json` file from the extension folder
-
-3. **Verify installation**
-   - Check extensions list for "YouTube Ad Blocker"
-   - Visit YouTube to test
+### Method 2: From Chrome Web Store
+*(Coming soon - will be available once published)*
 
 ## ✅ Verification Steps
 
-### Basic Test
-1. Open YouTube.com
-2. Search for any video with ads (e.g., "popular music videos")
-3. Play a video
-4. Ads should be automatically skipped or not appear
-
-### Advanced Test
+### 1. Check Extension Status
 1. Click the extension icon in your toolbar
-2. Check that statistics are updating
-3. Try toggling different settings
-4. Test whitelist functionality
+2. Verify the popup opens with the "Ad Blocker Pro" interface
+3. Check that the status shows "Active"
 
-## 🔧 Troubleshooting
+### 2. Test on YouTube
+1. Navigate to `https://www.youtube.com`
+2. Play a video that typically has ads
+3. Observe that ads are skipped or removed
+4. Check the extension popup for increasing blocked count
+
+### 3. Run Test Suite
+1. Open YouTube in a new tab
+2. Open Developer Console (F12)
+3. Type `window.runExtensionTests()` and press Enter
+4. Verify all tests pass (80%+ success rate)
+
+## 🔧 Configuration
+
+### Initial Setup
+1. **Click the extension icon**
+2. **Review Settings** in the Settings tab
+3. **Enable AI Detection** for best results
+4. **Choose Theme** (Auto/Light/Dark)
+5. **Set Preferences** for notifications and auto-skip
+
+### Advanced Configuration
+1. **Go to Advanced tab**
+2. **Add Custom Rules** if needed
+3. **Configure Whitelist/Blacklist**
+4. **Export Settings** for backup
+
+## 🚨 Troubleshooting
 
 ### Extension Not Working
+
+#### Check Installation
 ```bash
-# Run the test script to validate installation
-cd youtube-adblocker
-node test-extension.js
+# Verify extension is enabled
+1. Go to chrome://extensions/
+2. Find "YouTube Ad Blocker Pro"
+3. Ensure the toggle is ON
+4. Check for error messages
 ```
 
-**Common Solutions:**
-- Reload the extension (`chrome://extensions/` → Reload button)
-- Clear browser cache
-- Restart browser
-- Check for conflicting extensions
+#### Refresh YouTube
+```bash
+# Clear cache and refresh
+1. Open YouTube (Ctrl+T)
+2. Press Ctrl+F5 to hard refresh
+3. Try a different video
+```
 
-### Ads Still Showing
-1. **Check Settings**
-   - Click extension icon
-   - Ensure "Block Video Ads" is enabled
-   - Try different combinations of settings
+#### Check Permissions
+```bash
+# Verify required permissions
+1. chrome://extensions/
+2. Click "Details" for the extension
+3. Review permissions under "Site access"
+4. Ensure "Allow on all sites" is enabled
+```
 
-2. **Report Issues**
-   - Click "Report Unblocked Ad" in the popup
-   - Include screenshots when prompted
+### Common Issues
 
-### Performance Issues
-- Disable unnecessary features in settings
-- Clear extension data and reinstall
-- Check browser console for errors
+#### Ads Still Showing
+1. **Update Extension**: Download latest version
+2. **Enable AI Detection**: Settings > AI-Powered Detection
+3. **Clear Cache**: Chrome settings > Clear browsing data
+4. **Disable Conflicting Extensions**: Turn off other ad blockers temporarily
 
-## 🎯 Features to Test
+#### Extension Icon Missing
+1. **Pin Extension**: Click puzzle icon > Pin extension
+2. **Check Extensions List**: chrome://extensions/ > Find extension
+3. **Restart Chrome**: Close and reopen browser
 
-| Feature | How to Test | Expected Result |
-|---------|--------------|-----------------|
-| Video Ad Blocking | Play any video with ads | Ads are skipped automatically |
-| Banner Ad Removal | Browse YouTube homepage | No banner ads visible |
-| Statistics | Open extension popup | Blocked count increases |
-| Settings | Toggle options | Settings save and apply |
-| Whitelist | Add channel to whitelist | Ads show on whitelisted channels |
+#### Performance Issues
+1. **Disable AI**: If CPU usage is high
+2. **Performance Mode**: Enable in Advanced settings
+3. **Reduce Check Frequency**: Adjust settings
+4. **Clear Statistics**: Reset to improve performance
+
+### Error Messages
+
+#### "Extension Inactive"
+- **Cause**: Content script failed to load
+- **Solution**: Refresh YouTube page, restart browser
+
+#### "Storage Error"
+- **Cause**: Chrome storage quota exceeded
+- **Solution**: Clear statistics, export settings first
+
+#### "Network Error"
+- **Cause**: Background script communication failed
+- **Solution**: Restart browser, check network connection
+
+## 🔄 Updates
+
+### Manual Updates
+```bash
+# Download latest version
+git pull origin main
+
+# Or re-download from GitHub
+# 1. Visit repository page
+# 2. Click "Code" > "Download ZIP"
+# 3. Extract and replace extension folder
+```
+
+### Auto Updates (Web Store Version)
+- Extensions update automatically through Chrome
+- Check for updates in chrome://extensions/
+- Enable "Developer mode" for immediate updates
 
 ## 📱 Mobile Support
 
-**Android (Chrome Mobile)**
-- Extension support is limited on mobile
-- Use alternative ad-blocking browsers like Brave
-- Or use YouTube Vanced/ReVanced apps
+### Chrome on Android
+- **Not Supported**: Chrome extensions don't work on mobile
+- **Alternative**: Use YouTube Premium or mobile browsers with built-in ad blocking
 
-**iOS**
-- Safari extensions are possible but require different setup
-- Consider content blocker apps from App Store
+### Alternative Solutions
+- **Brave Browser**: Built-in ad blocking
+- **Firefox Mobile**: Extension support (desktop extensions)
+- **YouTube Premium**: Official ad-free experience
 
-## 🔒 Privacy & Security
+## 🔒 Security & Privacy
 
-- **No data sent to external servers**
-- **All statistics stored locally**
-- **No tracking or analytics**
-- **Open source and auditable**
+### Data Storage
+- **Local Only**: All data stored locally on your device
+- **No Tracking**: No user behavior monitoring
+- **Optional Analytics**: Can be disabled in settings
+
+### Permissions Explained
+| Permission | Purpose | Necessary |
+|-------------|---------|-----------|
+| storage | Save settings and statistics | ✅ Required |
+| tabs | Detect YouTube pages, communicate | ✅ Required |
+| webRequest | Block ad network requests | ✅ Required |
+| declarativeNetRequest | Efficient request blocking | ✅ Required |
+| scripting | Inject content scripts | ✅ Required |
+| activeTab | Screenshot for reports | ✅ Required |
+
+### Security Features
+- **Content Security Policy**: Strict security headers
+- **Sandboxed Execution**: Isolated environment
+- **No Remote Code**: All functionality self-contained
+- **Open Source**: Full code transparency
+
+## 🎯 Best Practices
+
+### Performance Optimization
+1. **Enable Performance Mode** on older devices
+2. **Disable AI Detection** if not needed
+3. **Clear Statistics** periodically
+4. **Use Custom Rules** sparingly
+
+### Privacy Protection
+1. **Disable Telemetry** if concerned
+2. **Export Settings** for backup
+3. **Review Permissions** regularly
+4. **Update Frequently** for security
+
+### Troubleshooting Routine
+1. **Check Extension Status** first
+2. **Refresh YouTube Page**
+3. **Run Test Suite** for diagnostics
+4. **Report Issues** with details
 
 ## 📞 Support
 
-**Getting Help:**
-1. Check the troubleshooting section above
-2. Review the full README.md documentation
-3. Run the test script to diagnose issues
-4. Report bugs on GitHub Issues
+### Getting Help
+- **Documentation**: [README.md](README.md)
+- **Issues**: [GitHub Issues](https://github.com/Salman-TCM/youtube-adblocker/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Salman-TCM/youtube-adblocker/discussions)
 
-** contributing:**
-- Fork the repository
-- Make improvements
-- Submit pull requests
-- Help improve ad detection patterns
+### Reporting Bugs
+When reporting issues, include:
+- Chrome version
+- Extension version
+- YouTube URL
+- Error messages
+- Steps to reproduce
 
-## 🎉 Success!
+### Feature Requests
+- Submit via GitHub Issues
+- Label as "enhancement"
+- Describe use case clearly
+- Consider implementation complexity
 
-Once installed, you should see:
-- ✅ No more video ads on YouTube
-- ✅ Cleaner YouTube interface
-- ✅ Faster page loading
-- ✅ Better viewing experience
+## 🎉 Uninstallation
 
-**Enjoy your ad-free YouTube experience!**
+### Remove Extension
+1. Go to `chrome://extensions/`
+2. Find "YouTube Ad Blocker Pro"
+3. Click "Remove" button
+4. Confirm removal
+
+### Clear Data
+```bash
+# Optionally clear all data
+1. Before uninstalling: Settings > Export Settings
+2. After uninstalling: chrome://settings/content > Site data
+3. Search for youtube-adblocker and remove
+```
 
 ---
 
-**Need help? Check the full [README.md](README.md) for detailed documentation.**
+**🚀 Enjoy your ad-free YouTube experience!**
+
+If you encounter any issues, please check the [troubleshooting section](#-troubleshooting) or visit our [GitHub repository](https://github.com/Salman-TCM/youtube-adblocker) for support.

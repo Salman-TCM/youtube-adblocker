@@ -1,253 +1,282 @@
-# YouTube Ad Blocker
+# YouTube Ad Blocker Pro 🛡️
 
-A powerful browser extension that blocks YouTube ads, sponsored content, and promotional material across YouTube's platform.
+An advanced, AI-powered YouTube ad blocker with real-time analytics, customizable rules, and a modern interface.
 
-## Features
+## ✨ Features
 
-- **Video Ad Blocking**: Automatically skips or removes video ads
-- **Banner Ad Removal**: Hides display ads and banners
-- **Sponsored Content Blocking**: Removes sponsored videos and product placements
-- **Real-time Statistics**: Track how many ads have been blocked
-- **Customizable Settings**: Choose which types of ads to block
-- **Whitelist Support**: Allow ads on specific channels if desired
-- **Ad Reporting**: Report unblocked ads to improve the blocker
-- **Lightweight & Fast**: Minimal impact on browser performance
+### 🤖 AI-Powered Detection
+- **Machine Learning**: Advanced neural network-inspired pattern recognition
+- **Smart Classification**: Automatically identifies new ad formats
+- **Adaptive Blocking**: Learns from YouTube's changes in real-time
+- **Performance Optimized**: Efficient AI algorithms with minimal resource usage
 
-## Installation
+### 📊 Real-Time Analytics
+- **Live Statistics**: Track ads blocked, success rate, and performance
+- **Historical Data**: View blocking trends over time
+- **Performance Metrics**: Monitor CPU usage, memory, and response times
+- **Interactive Charts**: Visual representation of blocking effectiveness
 
-### For Chrome/Edge/Brave (Chromium-based browsers)
+### 🎛️ Advanced Customization
+- **Custom Rules**: Add your own CSS selectors and URL patterns
+- **Whitelist/Blacklist**: Manage sites to exclude or specifically block
+- **Granular Controls**: Toggle specific ad types independently
+- **Import/Export Settings**: Backup and share your configuration
 
-1. **Download the extension**
+### 🎨 Modern Interface
+- **Dark/Light Themes**: Automatic theme switching with manual override
+- **Tabbed Navigation**: Organized settings and advanced options
+- **Responsive Design**: Works perfectly on all screen sizes
+- **Smooth Animations**: Professional transitions and micro-interactions
+
+### ⚡ Performance Features
+- **Optimized Engine**: Minimal impact on browser performance
+- **Performance Mode**: Automatic optimization for low-end devices
+- **Resource Monitoring**: Real-time CPU and memory tracking
+- **Efficient Algorithms**: Smart caching and throttling
+
+### 🎯 Advanced Blocking
+- **Video Ads**: Skips and removes video advertisements
+- **Banner Ads**: Eliminates display ads and overlays
+- **Sponsored Content**: Hides promoted videos and placements
+- **Tracking Prevention**: Blocks ad trackers and analytics
+- **Network Interception**: Stops ads at the request level
+
+### ⌨️ Keyboard Shortcuts
+- `Ctrl+K` (Cmd+K on Mac): Toggle pause/resume blocking
+- `Ctrl+D` (Cmd+D on Mac): Toggle theme
+- `Ctrl+R` (Cmd+R on Mac): Reset statistics
+
+## 🚀 Installation
+
+### From Source
+1. Clone this repository:
    ```bash
-   git clone https://github.com/yourusername/youtube-adblocker.git
+   git clone https://github.com/Salman-TCM/youtube-adblocker.git
    cd youtube-adblocker
    ```
 
-2. **Load the extension in your browser**
-   - Open Chrome/Edge/Brave
-   - Navigate to `chrome://extensions/`
-   - Enable "Developer mode" (toggle in top right)
+2. Load extension in Chrome:
+   - Open `chrome://extensions/`
+   - Enable "Developer mode"
    - Click "Load unpacked"
-   - Select the `youtube-adblocker` folder
+   - Select the extension folder
 
-3. **Verify installation**
-   - The extension icon should appear in your browser toolbar
-   - Visit YouTube to see the ad blocker in action
+### From Chrome Web Store
+*(Coming soon)*
 
-### For Firefox
-
-1. **Download the extension**
-   ```bash
-   git clone https://github.com/yourusername/youtube-adblocker.git
-   cd youtube-adblocker
-   ```
-
-2. **Load the extension in Firefox**
-   - Open Firefox
-   - Navigate to `about:debugging`
-   - Click "This Firefox"
-   - Click "Load Temporary Add-on"
-   - Select the `manifest.json` file
-
-3. **Verify installation**
-   - The extension should appear in your extensions list
-   - Visit YouTube to see the ad blocker in action
-
-## Usage
+## 📖 Usage
 
 ### Basic Usage
+1. **Install** the extension
+2. **Visit YouTube** - ads are blocked automatically
+3. **Click the icon** to view statistics and settings
 
-1. **Automatic Protection**: The extension works automatically once installed
-2. **Extension Popup**: Click the extension icon to view:
-   - Blocking statistics
-   - Settings and preferences
-   - Whitelist management
-   - Ad reporting tools
+### Advanced Features
 
-### Settings Configuration
+#### AI Detection
+- Enable "AI-Powered Detection" in Settings
+- The extension will learn and adapt to new ad formats
+- Monitor AI effectiveness in the Performance tab
 
-- **Block Video Ads**: Toggle video ad blocking on/off
-- **Block Banner Ads**: Control display ad removal
-- **Block Sponsored Content**: Remove sponsored videos and promotions
-- **Auto-Skip Ads**: Automatically skip ads when possible
-- **Show Notifications**: Display notifications when ads are blocked
+#### Custom Rules
+1. Go to Advanced tab
+2. Enter CSS selectors or URL patterns
+3. Click "Add Rule" to apply
 
-### Whitelist Management
+#### Whitelist/Blacklist
+1. Navigate to Advanced > Whitelist/Blacklist
+2. Add domains or URL patterns
+3. Toggle between whitelist and blacklist tabs
 
-1. **Whitelist Current Site**: Click "Whitelist Site" in the popup
-2. **Manage Whitelist**: Use the popup to add/remove sites from whitelist
-3. **Temporary Disable**: Disable the extension for specific sites if needed
+#### Export/Import
+1. Settings > Export Settings to backup
+2. Share your configuration with others
+3. Import settings on new devices
 
-### Reporting Issues
+## 🔧 Configuration
 
-1. **Report Unblocked Ad**: Click "Report Unblocked Ad" in the popup
-2. **Include Screenshots**: The extension captures screenshots automatically
-3. **Submit Feedback**: Reports help improve ad detection
+### Settings Explained
 
-## How It Works
+| Setting | Description | Default |
+|---------|-------------|----------|
+| Block Video Ads | Skip and remove video advertisements | ✅ |
+| Block Banner Ads | Remove display ads and banners | ✅ |
+| Block Sponsored Content | Hide sponsored videos and placements | ✅ |
+| Auto-Skip Ads | Automatically skip ads when possible | ✅ |
+| Show Notifications | Display blocking notifications | ✅ |
+| AI-Powered Detection | Use advanced AI for ad detection | ✅ |
 
-### Network-Level Blocking
+### Performance Options
+- **Theme**: Auto/Light/Dark
+- **Animation Speed**: Fast/Normal/Slow
+- **Performance Mode**: Enabled automatically on low-end devices
 
-The extension blocks ad-related network requests:
-- Google AdSense and DoubleClick servers
-- YouTube ad delivery endpoints
-- Third-party ad networks
+### Custom Rules Format
+```css
+/* CSS Selectors */
+.ad-container
+.promoted-video
+[data-ad-type]
 
-### DOM Manipulation
+/* URL Patterns */
+*://*.ads.example.com/*
+*://tracker.example.com/*
+```
 
-Removes ad elements from the page:
-- Video ad overlays
-- Banner advertisements
-- Sponsored content markers
-- Product placement prompts
+## 🛠️ Development
 
-### Video Player Integration
-
-- Detects ad indicators in the YouTube player
-- Automatically clicks skip buttons
-- Mutes ads during playback
-- Fast-forwards through unskippable ads
-
-### API Interception
-
-- Modifies YouTube API responses
-- Removes ad data from video metadata
-- Prevents ad segment markers in timeline
-
-## Technical Details
-
-### File Structure
-
+### Project Structure
 ```
 youtube-adblocker/
-├── manifest.json          # Extension configuration
-├── background.js          # Service worker for network blocking
-├── content.js             # Content script for DOM manipulation
-├── video-ad-blocker.js    # Specialized video ad handler
-├── styles.css             # CSS rules for hiding ads
-├── popup.html             # Extension popup interface
-├── popup.css              # Popup styling
-├── popup.js               # Popup functionality
-├── icons/
-│   └── icon.svg           # Extension icon
-└── README.md              # This file
+├── manifest.json          # Extension manifest
+├── popup.html            # Main popup interface
+├── popup.css             # Modern styling
+├── popup.js              # Advanced popup logic
+├── content.js            # AI-powered content script
+├── background.js         # Background service worker
+├── styles.css           # Content injection styles
+├── video-ad-blocker.js  # Video-specific handling
+├── rules.json           # Declarative net request rules
+└── icons/              # Extension icons
 ```
 
-### Permissions Required
+### Key Technologies
+- **Manifest V3**: Latest Chrome extension standards
+- **Service Workers**: Efficient background processing
+- **Declarative Net Request**: High-performance request blocking
+- **CSS Injection**: Dynamic content modification
+- **Chrome Storage API**: Persistent settings and statistics
 
-- `webRequest`: Block ad-related network requests
-- `webRequestBlocking`: Intercept and block requests
-- `storage`: Save settings and statistics
-- `tabs`: Access current tab information
+### AI Implementation
+The AI detection system uses:
+- **Feature Extraction**: Analyzes element attributes, position, and content
+- **Pattern Classification**: Neural network-inspired scoring system
+- **Adaptive Learning**: Updates detection patterns based on success rate
+- **Performance Optimization**: Efficient algorithms with minimal overhead
 
-### Browser Compatibility
+## 📊 Statistics & Analytics
 
-- ✅ Chrome (Manifest V3)
-- ✅ Edge (Manifest V3)
-- ✅ Brave (Manifest V3)
-- ✅ Opera (Manifest V3)
-- ⚠️ Firefox (Requires Manifest V2 conversion)
+### Tracked Metrics
+- **Ads Blocked**: Total number of advertisements blocked
+- **Success Rate**: Percentage of ads successfully blocked
+- **Performance**: CPU usage, memory consumption, response time
+- **History**: Daily and weekly blocking trends
+- **Session Data**: Current session statistics
 
-## Troubleshooting
+### Data Storage
+- **Local Storage**: Statistics, reports, and temporary data
+- **Sync Storage**: Settings and preferences across devices
+- **Automatic Cleanup**: Old data pruned to maintain performance
+
+## 🔒 Privacy & Security
+
+### Data Collection
+- **No Personal Data**: No tracking of user content or behavior
+- **Local Storage**: All data stored locally on user device
+- **Optional Analytics**: Statistics tracking can be disabled
+- **Open Source**: Full code transparency and auditability
+
+### Security Features
+- **Content Security Policy**: Strict security headers
+- **Permission Minimization**: Only necessary permissions requested
+- **Sandboxed Execution**: Isolated content script environment
+- **Regular Updates**: Security patches and improvements
+
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **Extension not working**
-   - Ensure developer mode is enabled
-   - Check if the extension is properly loaded
-   - Try refreshing YouTube pages
+#### Extension Not Working
+1. Check if extension is enabled in `chrome://extensions/`
+2. Ensure YouTube is fully refreshed (Ctrl+F5)
+3. Check for conflicting ad blockers
+4. Review error messages in extension popup
 
-2. **Ads still showing**
-   - Check extension settings
-   - Try clearing browser cache
-   - Report unblocked ads for improvement
+#### High CPU Usage
+1. Disable AI detection if not needed
+2. Reduce checking frequency in settings
+3. Enable performance mode
+4. Clear custom rules that may be inefficient
 
-3. **Performance issues**
-   - Extension is optimized for minimal impact
-   - Check browser console for errors
-   - Disable unnecessary features in settings
+#### Ads Not Blocked
+1. Update to latest version
+2. Check if YouTube changed their interface
+3. Enable AI detection for adaptive blocking
+4. Report unblocked ads for analysis
 
-### Debug Mode
+### Debug Information
+Enable developer console for detailed logging:
+- Press F12 on YouTube
+- Check Console tab for "🚀 YouTube Ad Blocker Pro" messages
+- Report issues with console output
 
-Enable debug logging:
-1. Open browser developer tools (F12)
-2. Go to Console tab
-3. Filter for "YouTube Ad Blocker" messages
+## 🤝 Contributing
 
-## Privacy & Security
-
-### Data Collection
-
-- **No personal data collected**
-- **No browsing history stored**
-- **Statistics stored locally only**
-- **Anonymous error reporting only**
-
-### Security Measures
-
-- No external server connections
-- No third-party tracking
-- Minimal permission usage
-- Code is open source and auditable
-
-## Contributing
+### How to Contribute
+1. **Fork** the repository
+2. **Create** a feature branch
+3. **Make** your changes
+4. **Test** thoroughly
+5. **Submit** a pull request
 
 ### Development Setup
+```bash
+# Clone the repository
+git clone https://github.com/Salman-TCM/youtube-adblocker.git
+cd youtube-adblocker
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-### Adding New Ad Selectors
-
-Update `adSelectors` array in `content.js`:
-```javascript
-const adSelectors = [
-  // Add new selectors here
-  '.new-ad-class',
-  '[data-ad-type="new"]'
-];
+# Load in Chrome for development
+# Open chrome://extensions/ > Developer mode > Load unpacked
 ```
 
-### Updating Ad Patterns
+### Code Style
+- **ES6+**: Modern JavaScript features
+- **Classes**: Organized object-oriented code
+- **Comments**: Comprehensive documentation
+- **Performance**: Optimized for efficiency
 
-Add new patterns to `adPatterns` in `background.js`:
-```javascript
-const adPatterns = [
-  // Add new URL patterns here
-  "*://*.new-ad-domain.com/*"
-];
-```
+## 📝 Changelog
 
-## License
+### Version 2.0.0
+- ✨ AI-powered ad detection
+- 📊 Real-time analytics dashboard
+- 🎨 Complete UI redesign
+- ⚡ Performance optimizations
+- 🎛️ Advanced customization options
+- ⌨️ Keyboard shortcuts
+- 📱 Improved mobile responsiveness
+
+### Version 1.0.0
+- 🛡️ Basic ad blocking
+- 📊 Simple statistics
+- ⚙️ Basic settings
+
+## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Changelog
+## 🙏 Acknowledgments
 
-### Version 1.0.0
-- Initial release
-- Video ad blocking
-- Banner ad removal
-- Sponsored content filtering
-- Statistics tracking
-- Settings management
-- Whitelist support
-- Ad reporting system
+- **YouTube Team**: For the platform we enhance
+- **Open Source Community**: For inspiration and tools
+- **Contributors**: For making this extension better
+- **Users**: For feedback and support
 
-## Support
+## 📞 Support
 
-- **Issues**: Report bugs on GitHub Issues
-- **Features**: Request features on GitHub Discussions
-- **Security**: Report security issues privately
-- **Donations**: Support development (see popup for link)
+### Get Help
+- **GitHub Issues**: [Report bugs](https://github.com/Salman-TCM/youtube-adblocker/issues)
+- **Discussions**: [Community support](https://github.com/Salman-TCM/youtube-adblocker/discussions)
+- **Documentation**: [Wiki](https://github.com/Salman-TCM/youtube-adblocker/wiki)
 
-## Disclaimer
-
-This extension is for educational and personal use only. It may violate YouTube's Terms of Service. Use at your own risk. The developers are not responsible for any consequences of using this extension.
+### Report Issues
+When reporting issues, please include:
+- Chrome version
+- Extension version
+- YouTube URL where issue occurs
+- Console error messages
+- Screenshots if applicable
 
 ---
 
-**Made with ❤️ for a better YouTube experience**
+**YouTube Ad Blocker Pro** - Enjoy an ad-free YouTube experience! 🚀
