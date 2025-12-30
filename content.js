@@ -231,21 +231,9 @@
         }
 
         startComprehensiveBlocking() {
-            // Initial sweep
-            this.performInitialSweep();
-            
-            // Continuous monitoring
-            this.startMutationObserver();
-            this.startVideoMonitoring();
-            this.startPeriodicChecks();
-            
-            // Network interception
-            this.interceptNetworkRequests();
-            
-            // AI-powered scanning
-            if (this.settings.enableAI) {
-                this.startAIScanning();
-            }
+            // Disable all blocking to prevent black screen
+            console.log('⏸️ All blocking disabled to prevent black screen - using video-ad-blocker.js only');
+            // Only let video-ad-blocker.js handle video ads
         }
 
         performInitialSweep() {
