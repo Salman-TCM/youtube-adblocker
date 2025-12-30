@@ -327,12 +327,14 @@
                 });
             });
             
-            this.observer.observe(document.body, {
-                childList: true,
-                subtree: true,
-                attributes: true,
-                attributeFilter: ['class', 'id', 'style']
-            });
+            if (document.body) {
+                this.observer.observe(document.body, {
+                    childList: true,
+                    subtree: true,
+                    attributes: true,
+                    attributeFilter: ['class', 'id', 'style']
+                });
+            }
         }
 
         checkNewNode(node) {
