@@ -1,0 +1,367 @@
+/* YouTube Ad Blocker CSS Styles */
+
+/* Hide video ads */
+.video-ads,
+.ad-container,
+.ad-display,
+.ad-showing,
+.ytp-ad-module,
+.ytp-ad-overlay-slot,
+.ytp-ad-player-overlay,
+.ytp-ad-skip-button-container,
+.ytp-ad-preview-container,
+.ytp-ad-text {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Hide banner and display ads */
+.ytd-display-ad-renderer,
+.ytd-promoted-sparkles-text-renderer,
+.ytd-promoted-video-renderer,
+.ytd-in-feed-ad-layout-renderer,
+.ytd-action-companion-ad-renderer,
+.ytd-masthead-ad-renderer,
+.ytd-banner-promo-renderer {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide sidebar ads */
+#player-ads,
+#watch-buy-urls,
+#watch-channel-brand-div,
+#watch7-sidebar-ads,
+#watch-pyv-conn {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide overlay ads */
+.ytp-ad-overlay-container,
+.ytp-ad-action-interstitial-overlay-container,
+.ytp-ad-image-overlay {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide sponsored content */
+[data-ad-type],
+[data-ad-impression],
+[aria-label*="Ad"],
+[aria-label*="Sponsored"],
+[title*="Ad"],
+[title*="Sponsored"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide YouTube Music ads */
+.ytmusic-ad-slot-renderer,
+.ytmusic-ad-overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* General ad patterns */
+*[class*="ad-"]:not([class*="loading"]),
+*[id*="ad-"]:not([id*="loading"]),
+*[class*="ads"]:not([class*="roadblocks"]),
+*[id*="ads"]:not([id*="loading"]),
+.companion-ad-container,
+.ad_creative,
+.ad_wrapper,
+.google_ads,
+.adsbygoogle {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Hide ad-related iframes */
+iframe[src*="doubleclick"],
+iframe[src*="googleads"],
+iframe[src*="googlesyndication"],
+iframe[src*="amazon-adsystem"],
+iframe[src*="facebook.com/tr"],
+iframe[src*="taboola"],
+iframe[src*="outbrain"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+/* Remove ad segments from progress bar */
+.ytp-ad-progress-list,
+.ytp-ad-progress {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad badges and labels */
+.badge-style-type-ad,
+.badge-style-type-sponsored,
+.ytd-badge-supported-renderer.badge-style-type-ad,
+.ytd-badge-supported-renderer.badge-style-type-sponsored {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide shopping links and product placement */
+.ytd-shopping-card-renderer,
+.ytd-product-placement-renderer,
+.ytd-merch-shelf-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide recommendation ads */
+.ytd-compact-promoted-video-renderer,
+.ytd-compact-promoted-item-renderer,
+.ytd-grid-promoted-video-renderer,
+.ytd-grid-promoted-item-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide channel membership promotions */
+.ytd-membership-offer-renderer,
+.ytd-sponsorships-offer-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide premium promotions */
+.ytd-premium-offer-renderer,
+.ytd-masthead-premium-promo-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad breaks indicators */
+.ytp-ad-break-overlay,
+.ytp-ad-draft-overlay {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide companion banners */
+#companion,
+#companion-ad,
+.companion-ad {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide survey and feedback prompts */
+.ytd-survey-renderer,
+.ytd-feedback-renderer,
+.ytd-watch-feedback-rejection-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide paid promotion labels */
+.ytd-paid-content-overlay-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide YouTube TV upsell */
+.yt-mealbar-promo-renderer {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Ensure video player takes full space when ads are hidden */
+.html5-video-container {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Remove ad-related background colors */
+.ytp-ad-player-overlay,
+.ytp-ad-skip-button-container {
+  background: transparent !important;
+}
+
+/* Hide ad countdown timers */
+.ytp-ad-time-display,
+.ytp-ad-duration-display {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related tooltips */
+.ytp-ad-tooltip,
+.ytp-ad-preview-container .ytp-tooltip {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related controls */
+.ytp-ad-controls,
+.ytp-ad-overlay-controls {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Remove ad-related z-index stacking */
+.ytp-ad-module,
+.ytp-ad-overlay-slot {
+  z-index: -1 !important;
+}
+
+/* Hide ad related images */
+.ytp-ad-image,
+.ytp-ad-thumbnail {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related buttons that aren't skip buttons */
+.ytp-ad-button:not(.ytp-ad-skip-button),
+.ytp-ad-action-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related text */
+.ytp-ad-text,
+.ytp-ad-headline,
+.ytp-ad-description {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related links */
+.ytp-ad-link,
+.ytp-ad-cta-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related icons */
+.ytp-ad-icon,
+.ytp-ad-badge {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related progress indicators */
+.ytp-ad-progress-bar,
+.ytp-ad-seek-bar {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related volume controls */
+.ytp-ad-volume-slider,
+.ytp-ad-mute-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related settings */
+.ytp-ad-settings-button,
+.ytp-ad-info-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related fullscreen controls */
+.ytp-ad-fullscreen-button,
+.ytp-ad-pip-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related playback controls */
+.ytp-ad-play-button,
+.ytp-ad-pause-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related seek controls */
+.ytp-ad-previous-button,
+.ytp-ad-next-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related playlist controls */
+.ytp-ad-playlist-button,
+.ytp-ad-loop-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related captions */
+.ytp-ad-captions-button,
+.ytp-ad-annotations-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related speed controls */
+.ytp-ad-speed-button,
+.ytp-ad-quality-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related theater mode */
+.ytp-ad-theater-button,
+.ytp-ad-miniplayer-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related watch later controls */
+.ytp-ad-watch-later-button,
+.ytp-ad-share-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related download controls */
+.ytp-ad-download-button,
+.ytp-ad-report-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related menu controls */
+.ytp-ad-menu-button,
+.ytp-ad-more-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related subtitle controls */
+.ytp-ad-subtitles-button,
+.ytp-ad-audio-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related accessibility controls */
+.ytp-ad-accessibility-button,
+.ytp-ad-keyboard-button {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide ad related help controls */
+.ytp-ad-help-button,
+.ytp-ad-feedback-button {
+  display: none !important;
+  visibility: hidden !important;
+}

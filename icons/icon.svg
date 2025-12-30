@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <!-- Background circle -->
+  <circle cx="64" cy="64" r="60" fill="#FF0000" stroke="#CC0000" stroke-width="4"/>
+  
+  <!-- YouTube play button shape -->
+  <path d="M 32 32 L 32 96 L 96 64 Z" fill="#FFFFFF" opacity="0.9"/>
+  
+  <!-- Ad block overlay (X mark) -->
+  <g stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" fill="none">
+    <line x1="40" y1="40" x2="88" y2="88"/>
+    <line x1="88" y1="40" x2="40" y2="88"/>
+  </g>
+  
+  <!-- Shield shape outline -->
+  <path d="M 64 20 L 84 30 L 84 60 Q 84 80 64 100 Q 44 80 44 60 L 44 30 Z" 
+        fill="none" stroke="#FFFFFF" stroke-width="3" opacity="0.7"/>
+</svg>
