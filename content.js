@@ -99,13 +99,21 @@
 
         getAttributePatterns(element) {
             const patterns = [];
-            for (let attr of element.attributes) {
-                const name = attr.name.toLowerCase();
-                const value = attr.value.toLowerCase();
-                if (name.includes('ad') || value.includes('ad') || 
-                    name.includes('sponsor') || value.includes('sponsor')) {
-                    patterns.push({name, value});
+            if (!element || !element.attributes) return patterns;
+            
+            try {
+                for (let attr of element.attributes) {
+                    if (attr && attr.name && attr.value) {
+                        const name = typeof attr.name === 'string' ? attr.name.toLowerCase() : '';
+                        const value = typeof attr.value === 'string' ? attr.value.toLowerCase() : '';
+                        if (name.includes('ad') || value.includes('ad') || 
+                            name.includes('sponsor') || value.includes('sponsor')) {
+                            patterns.push({name, value});
+                        }
+                    }
                 }
+            } catch (error) {
+                console.log('Error in getAttributePatterns:', error);
             }
             return patterns;
         }
@@ -338,10 +346,12 @@
         }
 
         checkNewNode(node) {
+            if (!node) return;
+            
             // Quick check for obvious ads
-            const tagName = node.tagName?.toLowerCase() || '';
-            const className = node.className?.toLowerCase() || '';
-            const id = node.id?.toLowerCase() || '';
+            const tagName = (node && node.tagName) ? (typeof node.tagName === 'string' ? node.tagName.toLowerCase() : '') : '';
+            const className = (node && node.className) ? (typeof node.className === 'string' ? node.className.toLowerCase() : '') : '';
+            const id = (node && node.id) ? node.id.toLowerCase() : '';
             
             if (tagName.includes('ad') || className.includes('ad') || id.includes('ad')) {
                 if (this.shouldBlockElement(node)) {
