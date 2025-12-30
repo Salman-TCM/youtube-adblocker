@@ -1,17 +1,18 @@
-// YouTube Video Ad Blocker - Minimal Video Ad Handling
+// YouTube Video Ad Blocker - Comprehensive Ad Blocking
 (function() {
     'use strict';
     
-    console.log('⏸️ Video Ad Blocker - Minimal mode enabled');
+    console.log('🛡️ YouTube Ad Blocker - Comprehensive mode activated');
     
     let skipInterval;
+    let isAdActive = false;
     
-    // Function to handle video ads without interfering with normal videos
-    function handleVideoAds() {
+    // Function to check if we're on an ad
+    function isAdPlaying() {
         const video = document.querySelector('video');
-        if (!video) return;
+        if (!video) return false;
         
-        // Check for ad indicators - only act if ads are definitely present
+        // Check for ad indicators
         const adIndicators = [
             '.ad-showing',
             '.ytp-ad-module',
@@ -19,105 +20,200 @@
             '.ytp-ad-player-overlay',
             '.ytp-ad-overlay-slot',
             '.ytp-ad-skip-button',
-            '.ytp-ad-skip-button-modern'
+            '.ytp-ad-skip-button-modern',
+            '.ytp-ad-button',
+            '.ytp-ad-text',
+            '.ytp-ad-image',
+            '.ytp-ad-player-overlay-instream-info'
         ];
         
-        const hasAd = adIndicators.some(selector => {
+        // Check for any ad indicators
+        const hasAdIndicator = adIndicators.some(selector => {
             const element = document.querySelector(selector);
-            return element && element.offsetParent !== null;
+            return element && (element.offsetParent !== null || 
+                             window.getComputedStyle(element).display !== 'none');
         });
         
-        // Also check if video is very short (likely an ad)
-        const isShortVideo = video.duration && video.duration < 60; // Less than 1 minute = likely ad
+        // Check if URL contains ad indicators
+        const urlHasAd = window.location.href.includes('ad_format=') || 
+                         window.location.href.includes('ad_type=');
         
-        if (hasAd || isShortVideo) {
-            console.log('🎯 Ad detected, force skipping:', { hasAd, isShortVideo, duration: video.duration });
-            skipAd(video);
-            muteAd(video);
-            forceSkipVideo(video);
-        }
+        // Check if video is very short (likely an ad)
+        const isShortVideo = video.duration && video.duration < 90; // Less than 90 seconds
+        
+        // Check if player is in ad mode
+        const player = document.querySelector('.html5-video-player');
+        const playerHasAd = player && player.classList.contains('ad-showing');
+        
+        // Check for ad text content
+        const adTextElements = document.querySelectorAll('[aria-label*="ad"], [aria-label*="Ad"], [aria-label*="advertisement"]');
+        const hasAdText = adTextElements.length > 0;
+        
+        return hasAdIndicator || urlHasAd || isShortVideo || playerHasAd || hasAdText;
     }
     
-    // Function to skip ads
-    function skipAd(video) {
+    // Function to skip ads aggressively
+    function skipAd() {
+        const video = document.querySelector('video');
+        if (!video) return;
+        
+        console.log('🎯 Attempting to skip ad');
+        
+        // Method 1: Click skip buttons
         const skipSelectors = [
             '.ytp-ad-skip-button',
             '.ytp-ad-skip-button-modern',
             '.ytp-ad-skip-button-container button',
             '.ytp-ad-skip-button-modern button',
             '[aria-label*="Skip"]',
-            '[aria-label*="skip"]'
+            '[aria-label*="skip"]',
+            '.ytp-ad-skip-button-container',
+            '.ytp-ad-skip-modern'
         ];
         
         skipSelectors.forEach(selector => {
             try {
                 const skipButton = document.querySelector(selector);
-                if (skipButton && skipButton.offsetParent !== null) {
+                if (skipButton) {
+                    // Make button visible and clickable
+                    skipButton.style.display = 'block';
+                    skipButton.style.visibility = 'visible';
+                    skipButton.style.opacity = '1';
+                    skipButton.style.pointerEvents = 'auto';
                     skipButton.click();
                     console.log('⏭️ Clicked skip button:', selector);
-                    return;
                 }
             } catch (error) {
-                // Ignore click errors
+                // Continue trying other methods
+            }
+        });
+        
+        // Method 2: Force video to end
+        try {
+            if (video.duration && video.currentTime < video.duration - 0.5) {
+                video.currentTime = video.duration;
+                video.play().catch(() => {});
+                console.log('⏩ Forced video to end');
+            }
+        } catch (error) {
+            // Continue trying other methods
+        }
+        
+        // Method 3: Mute and set high playback rate
+        try {
+            video.muted = true;
+            video.playbackRate = 16; // Maximum speed
+            console.log('🔇 Muted and sped up ad');
+        } catch (error) {
+            // Continue if this fails
+        }
+        
+        // Method 4: Hide ad overlays
+        const adOverlays = document.querySelectorAll('.ytp-ad-player-overlay, .ytp-ad-overlay-slot, .ytp-ad-module');
+        adOverlays.forEach(overlay => {
+            try {
+                overlay.style.display = 'none';
+                overlay.style.visibility = 'hidden';
+                overlay.style.opacity = '0';
+            } catch (error) {
+                // Continue if this fails
             }
         });
     }
     
-    // Function to mute ads
-    function muteAd(video) {
-        try {
-            if (video.muted === false) {
-                video.muted = true;
-                console.log('🔇 Muted ad audio');
+    // Function to handle ads
+    function handleAds() {
+        const currentlyAdActive = isAdPlaying();
+        
+        if (currentlyAdActive && !isAdActive) {
+            // Ad just started
+            isAdActive = true;
+            console.log('🚨 Ad detected, taking action');
+            skipAd();
+        } else if (currentlyAdActive && isAdActive) {
+            // Ad is still active, keep trying to skip
+            skipAd();
+        } else if (!currentlyAdActive && isAdActive) {
+            // Ad just ended
+            isAdActive = false;
+            console.log('✅ Ad ended,恢复正常播放');
+            
+            // Restore normal playback
+            const video = document.querySelector('video');
+            if (video) {
+                try {
+                    video.muted = false;
+                    video.playbackRate = 1;
+                } catch (error) {
+                    // Ignore errors
+                }
             }
-        } catch (error) {
-            // Ignore mute errors
         }
     }
     
-    // Function to force skip video (aggressive ad skipping)
-    function forceSkipVideo(video) {
-        try {
-            // If video is very short, skip to end immediately
-            if (video.duration && video.duration < 60 && video.currentTime < video.duration - 1) {
-                video.currentTime = video.duration;
-                video.play();
-                console.log('⏩ Force skipped short video (ad)');
+    // Function to remove ad elements
+    function removeAdElements() {
+        const adSelectors = [
+            '.ytp-ad-module',
+            '.ytp-ad-preview-container',
+            '.ytp-ad-player-overlay',
+            '.ytp-ad-overlay-slot',
+            '.ytp-ad-button',
+            '.ytp-ad-text',
+            '.ytp-ad-image',
+            '.ytp-ad-player-overlay-instream-info',
+            '[class*="ad-"]',
+            '[id*="ad-"]'
+        ];
+        
+        adSelectors.forEach(selector => {
+            try {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(element => {
+                    if (element && element.offsetParent !== null) {
+                        element.remove();
+                    }
+                });
+            } catch (error) {
+                // Continue if removal fails
             }
-        } catch (error) {
-            // Ignore force skip errors
-        }
+        });
     }
     
-    // Start minimal monitoring - only check for ads, don't interfere with normal videos
-    function startMinimalMonitoring() {
+    // Start comprehensive monitoring
+    function startComprehensiveMonitoring() {
         if (skipInterval) clearInterval(skipInterval);
         
         skipInterval = setInterval(() => {
             try {
-                handleVideoAds();
+                handleAds();
+                removeAdElements();
             } catch (error) {
                 // Ignore monitoring errors
             }
-        }, 500); // Check every 500ms for faster response
+        }, 100); // Check every 100ms for very fast response
     }
     
-    // Initialize after page loads
+    // Initialize immediately
+    console.log('🎬 Starting comprehensive ad blocking');
+    startComprehensiveMonitoring();
+    
+    // Also initialize on page load
     setTimeout(() => {
-        console.log('🎬 Starting minimal video ad monitoring');
-        startMinimalMonitoring();
-    }, 2000);
+        startComprehensiveMonitoring();
+    }, 1000);
     
     // Handle page navigation
     let currentUrl = window.location.href;
     setInterval(() => {
         if (window.location.href !== currentUrl) {
             currentUrl = window.location.href;
+            isAdActive = false; // Reset ad state
             setTimeout(() => {
-                startMinimalMonitoring();
-            }, 1000);
+                startComprehensiveMonitoring();
+            }, 500);
         }
-    }, 1000);
+    }, 500);
     
     // Cleanup
     window.addEventListener('beforeunload', () => {
