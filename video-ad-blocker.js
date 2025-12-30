@@ -17,7 +17,9 @@
             '.ytp-ad-module',
             '.ytp-ad-preview-container',
             '.ytp-ad-player-overlay',
-            '.ytp-ad-overlay-slot'
+            '.ytp-ad-overlay-slot',
+            '.ytp-ad-skip-button',
+            '.ytp-ad-skip-button-modern'
         ];
         
         const hasAd = adIndicators.some(selector => {
@@ -25,10 +27,14 @@
             return element && element.offsetParent !== null;
         });
         
-        if (hasAd) {
-            console.log('🎯 Ad detected, attempting to skip');
+        // Also check if video is very short (likely an ad)
+        const isShortVideo = video.duration && video.duration < 60; // Less than 1 minute = likely ad
+        
+        if (hasAd || isShortVideo) {
+            console.log('🎯 Ad detected, force skipping:', { hasAd, isShortVideo, duration: video.duration });
             skipAd(video);
             muteAd(video);
+            forceSkipVideo(video);
         }
     }
     
@@ -69,6 +75,20 @@
         }
     }
     
+    // Function to force skip video (aggressive ad skipping)
+    function forceSkipVideo(video) {
+        try {
+            // If video is very short, skip to end immediately
+            if (video.duration && video.duration < 60 && video.currentTime < video.duration - 1) {
+                video.currentTime = video.duration;
+                video.play();
+                console.log('⏩ Force skipped short video (ad)');
+            }
+        } catch (error) {
+            // Ignore force skip errors
+        }
+    }
+    
     // Start minimal monitoring - only check for ads, don't interfere with normal videos
     function startMinimalMonitoring() {
         if (skipInterval) clearInterval(skipInterval);
@@ -79,7 +99,7 @@
             } catch (error) {
                 // Ignore monitoring errors
             }
-        }, 1000); // Check every second
+        }, 500); // Check every 500ms for faster response
     }
     
     // Initialize after page loads
