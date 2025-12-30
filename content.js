@@ -84,16 +84,16 @@
 
         extractFeatures(element) {
             return {
-                textContent: element.textContent?.toLowerCase() || '',
-                className: element.className?.toLowerCase() || '',
-                id: element.id?.toLowerCase() || '',
-                tagName: element.tagName?.toLowerCase() || '',
+                textContent: (element && element.textContent) ? element.textContent.toLowerCase() : '',
+                className: (element && element.className) ? (typeof element.className === 'string' ? element.className.toLowerCase() : '') : '',
+                id: (element && element.id) ? element.id.toLowerCase() : '',
+                tagName: (element && element.tagName) ? element.tagName.toLowerCase() : '',
                 attributes: this.getAttributePatterns(element),
                 position: this.getElementPosition(element),
                 size: this.getElementSize(element),
                 visibility: this.isElementVisible(element),
-                children: element.children?.length || 0,
-                parent: element.parentElement?.className?.toLowerCase() || ''
+                children: (element && element.children) ? element.children.length : 0,
+                parent: (element && element.parentElement && element.parentElement.className) ? (typeof element.parentElement.className === 'string' ? element.parentElement.className.toLowerCase() : '') : ''
             };
         }
 

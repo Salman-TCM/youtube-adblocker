@@ -55,8 +55,12 @@
         fastForwardAd(video);
 
         // Notify background script
-        if (chrome && chrome.runtime) {
-            chrome.runtime.sendMessage({ action: 'adBlocked' });
+        try {
+            if (chrome && chrome.runtime) {
+                chrome.runtime.sendMessage({ action: 'adBlocked' });
+            }
+        } catch (error) {
+            console.log('Error notifying background script:', error);
         }
     }
 
